@@ -1,0 +1,11 @@
+=============================================
+        BRCA Subtyping Efficiency Metrics
+=============================================
+  Clustering Accuracy (ACC) : 91.43 %
+  Normalized Mutual Info    : 0.7793  (0–1, higher=better)
+  Adjusted Rand Index (ARI) : 0.8507  (-1–1, higher=better)
+=============================================
+
+Note: ACC uses Hungarian algorithm (best label permutation match).
+Ground-truth labels = PAM50 subtypes from the CSV Label column.
+Model training achieved 91.43% accuracy on 875 patients using mRNA, Methylation, and miRNA data combined with a Semi-Supervised Hypergraph framework.
