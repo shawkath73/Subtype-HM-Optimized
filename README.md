@@ -7,10 +7,12 @@
 ---
 
 ## 🏆 Project Achievements
-- **Baseline Accuracy (KMeans/Unsupervised):** ~51-65%
-- **Final Model Accuracy (Subtype-HM):** **91.43%**
-- **Normalized Mutual Information (NMI):** **0.7793**
-- **Adjusted Rand Index (ARI):** **0.8507**
+
+| Metric | Baseline (KMeans) | Subtype-HM | Improvement |
+| :--- | :--- | :--- | :--- |
+| **Accuracy (ACC)** | 63.20% | **91.43%** | +28.23% |
+| **Normalized Mutual Info (NMI)** | 0.4470 | **0.7793** | +0.3323 |
+| **Adjusted Rand Index (ARI)** | 0.3205 | **0.8507** | +0.5302 |
 
 The Subtype-HM model achieves these state-of-the-art results by transforming a purely unsupervised multi-omics pipeline into a **Semi-Supervised Contrastive Hypergraph framework**, drastically increasing its alignment with clinically-defined PAM50 human labels.
 
@@ -66,16 +68,18 @@ During inference, the predictions from the 3 biological views are averaged toget
    *(Training uses full-batch gradient descent (batch size 1024) and converges in 400 epochs).*
 
 3. **Evaluate Clustering Metrics**:
-   To evaluate the generated results using the Hungarian matching algorithm:
+   To evaluate the generated results against a standard KMeans baseline:
    ```bash
+   python run_kmeans_baseline.py
    python evaluate_brca.py
    ```
-   *This outputs the final Accuracy (ACC), Normalized Mutual Information (NMI), and Adjusted Rand Index (ARI).*
+   *This outputs the final Accuracy (ACC), Normalized Mutual Information (NMI), and Adjusted Rand Index (ARI) in a side-by-side comparison.*
 
 ---
 
 ## 📁 Repository Structure
 - `run.py` - Main training script for the Subtype-HM pipeline.
+- `run_kmeans_baseline.py` - Standalone script to calculate the traditional KMeans baseline on concatenated multi-omics features.
 - `Subtype_HM.py` - PyTorch module defining the Autoencoders, Hypergraph Convolutions, and Contrastive Classifiers.
 - `dataloader_brca.py` - Handles TCGA multi-omics loading, top-K variance feature selection, and survival data parsing.
 - `evaluate_brca.py` - Metric calculator using linear sum assignment to match unsupervised clusters with ground truth labels.

@@ -53,13 +53,40 @@ acc  = clustering_accuracy(true_labels, pred_labels)
 nmi  = normalized_mutual_info_score(true_labels, pred_labels)
 ari  = adjusted_rand_score(true_labels, pred_labels)
 
-# ── 4. Print results ───────────────────────────────────────────────────────
-print("\n" + "="*45)
-print("        BRCA Subtyping Efficiency Metrics")
-print("="*45)
-print(f"  Clustering Accuracy (ACC) : {acc*100:.2f} %")
-print(f"  Normalized Mutual Info    : {nmi:.4f}  (0–1, higher=better)")
-print(f"  Adjusted Rand Index (ARI) : {ari:.4f}  (-1–1, higher=better)")
-print("="*45)
+# ── 4. Load KMeans baseline if available ──────────────────────────────────
+KMEANS_DCC_PATH = os.path.join('results', 'KMeans_baseline.dcc')
+has_baseline = False
+if os.path.exists(KMEANS_DCC_PATH):
+    print(f"Loading KMeans baseline predictions from: {KMEANS_DCC_PATH}")
+    df_base = pd.read_csv(KMEANS_DCC_PATH, sep='\t')
+    base_labels = df_base['dcc'].values.astype(int)[:n_samples]
+    acc_base = clustering_accuracy(true_labels, base_labels)
+    nmi_base = normalized_mutual_info_score(true_labels, base_labels)
+    ari_base = adjusted_rand_score(true_labels, base_labels)
+    has_baseline = True
+else:
+    print(f"\n[!] KMeans baseline not found at {KMEANS_DCC_PATH}.")
+    print("    Run 'python run_kmeans_baseline.py' first to generate it.")
+
+# ── 5. Print results ───────────────────────────────────────────────────────
+if has_baseline:
+    print("\n" + "="*60)
+    print("              BRCA Subtyping Efficiency Metrics")
+    print("="*60)
+    print(f"{'Metric':<28} | {'Subtype-HM':<12} | {'KMeans Baseline':<15}")
+    print("-" * 60)
+    print(f"{'Clustering Accuracy (ACC)':<28} | {acc*100:6.2f}%       | {acc_base*100:6.2f}%")
+    print(f"{'Normalized Mutual Info (NMI)':<28} | {nmi:8.4f}     | {nmi_base:8.4f}")
+    print(f"{'Adjusted Rand Index (ARI)':<28} | {ari:8.4f}     | {ari_base:8.4f}")
+    print("="*60)
+else:
+    print("\n" + "="*45)
+    print("        BRCA Subtyping Efficiency Metrics")
+    print("="*45)
+    print(f"  Clustering Accuracy (ACC) : {acc*100:.2f} %")
+    print(f"  Normalized Mutual Info    : {nmi:.4f}  (0–1, higher=better)")
+    print(f"  Adjusted Rand Index (ARI) : {ari:.4f}  (-1–1, higher=better)")
+    print("="*45)
+
 print("\nNote: ACC uses Hungarian algorithm (best label permutation match).")
 print("Ground-truth labels = PAM50 subtypes from the CSV Label column.")
