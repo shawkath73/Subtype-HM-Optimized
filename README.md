@@ -68,6 +68,16 @@ To quantify the contribution of multi-modal fusion, this repository includes a f
 
 The ablation demonstrates that while mRNA alone carries strong PAM50 signal, the hypergraph fusion of all three omics views provides a measurable improvement — validating the core multi-modal design of Subtype-HM.
 
+### Visual Comparison
+
+**Receiver Operating Characteristic (ROC) Curves** *(Visualizing the true positive vs false positive rates across all PAM50 subtypes)*
+
+![ROC Curves: Single vs Multi-Omic](Subtype-HM/results/ROC_SingleVSMulti.png)
+
+**Confusion Matrices** *(Highlighting the distribution of correct predictions and misclassifications)*
+
+![Confusion Matrices: Single vs Multi-Omic](Subtype-HM/results/ConfusionMatrix_SingleVsMulti.png)
+
 ---
 
 ## 🚀 How to Run
@@ -129,9 +139,14 @@ Subtype-HM-optimized/
 │   ├── models/
 │   │   └── BRCA.pth            # Saved multi-omic model checkpoint
 │   └── results/
-│       └── BRCA_evaluation_summary.txt
+│       ├── BRCA_evaluation_summary.txt       # Final output text containing calculated ACC, NMI, and ARI metrics
+│       ├── BRCA.dcc                          # Cached clustering data/coordinate file for the Subtype-HM model
+│       ├── BRCA.png                          # Final cluster visualization plot (e.g., t-SNE or UMAP) for Subtype-HM
+│       ├── ConfusionMatrix_SingleVsMulti.png # Single vs Multi-Omic Confusion Matrices
+│       ├── KMeans_baseline.dcc               # Cached clustering data/coordinate file for the baseline KMeans model
+│       └── ROC_SingleVSMulti.png             # Single vs Multi-Omic ROC curves
 └── notebooks/
-    └── SingleVsMulti_Comparison.ipynb   # Ablation study notebook
+    └── SingleVsMulti_Comparison.ipynb        # Ablation study notebook
 ```
 
 ---
