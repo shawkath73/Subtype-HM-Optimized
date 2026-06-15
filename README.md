@@ -60,9 +60,9 @@ To quantify the contribution of multi-modal fusion, this repository includes a f
 
 | Metric | Single-Omic (mRNA only) | Multi-Omic (Subtype-HM) |
 | :--- | :--- | :--- |
-| **Accuracy (ACC)** | — | **91.43%** |
-| **NMI** | — | **0.7793** |
-| **ARI** | — | **0.8507** |
+| **Accuracy (ACC)** | **90.17%** | **91.43%** |
+| **NMI** | **0.7570** | **0.7793** |
+| **ARI** | **0.8225** | **0.8507** |
 
 > Results populated after running the comparison notebook (see below).
 
